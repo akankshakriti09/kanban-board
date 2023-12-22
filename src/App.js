@@ -10,15 +10,15 @@ function App() {
   const userList = ['Anoop Sharma', 'Yogesh','Suresh', 'Shankar Kumar', 'Ramesh']
   const priorityList = [{name:'No priority', priority: 0}, {name:'Low', priority: 1}, {name:'Medium', priority: 2}, {name:'High', priority: 3}, {name:'Urgent', priority: 4}]
 
-  const [groupValue, setgroupValue] = useState('status')
+  const [groupValue, setgroupValue] = useState(getStateFromLocalStorage() || 'status')
   const [orderValue, setorderValue] = useState('title')
   const [ticketDetails, setticketDetails] = useState([]);
 
-  const orderDataByValue = useCallback(async (cardsArry) => {
+  const orderDataByValue = useCallback(async (cardsArray) => {
     if (orderValue === 'priority') {
-      cardsArry.sort((a, b) => a.priority - b.priority);
+      cardsArray.sort((a, b) => a.priority - b.priority);
     } else if (orderValue === 'title') {
-      cardsArry.sort((a, b) => {
+      cardsArray.sort((a, b) => {
         const titleA = a.title.toLowerCase();
         const titleB = b.title.toLowerCase();
 
@@ -31,21 +31,27 @@ function App() {
         }
       });
     }
-    await setticketDetails(cardsArry);
+    await setticketDetails(cardsArray);
   }, [orderValue, setticketDetails]);
 
+  function saveStateToLocalStorage(state) {
+    localStorage.setItem('groupValue', JSON.stringify(state));
+  }
+
+  function getStateFromLocalStorage() {
+    const storedState = localStorage.getItem('groupValue');
+    if (storedState) {
+      return JSON.parse(storedState);
+    }
+    return null; 
+  }
 
   useEffect(() => {
+    saveStateToLocalStorage(groupValue);
     async function fetchData() {
-      const response = await axios.get('https://tfyincvdrafxe7ut2ziwuhe5cm0xvsdu.lambda-url.ap-south-1.on.aws/ticketAndUsers');
-      // const ticketArray = refactorData(response);
+      const response = await axios.get('https://api.quicksell.co/v1/internal/frontend-assignment');
       await refactorData(response);
-
-      
-      
-
-      // console.log(ticketArray);
-
+  
     }
     fetchData();
     async function refactorData(response){
@@ -64,7 +70,7 @@ function App() {
       orderDataByValue(ticketArray)
     }
     
-  }, [orderDataByValue])
+  }, [orderDataByValue, groupValue])
 
   function handleGroupValue(value){
     setgroupValue(value);
