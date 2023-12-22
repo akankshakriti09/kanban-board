@@ -1,10 +1,12 @@
 .card_container{
-    width: 250px;
+    width: 100%;
     padding: 1rem;
     border-radius: .5rem;
     border: 1px solid #ccc;
-    box-shadow: 0px 0px 5px 2px #ccc;
-    background-color: var(--white1); 
+    box-shadow: 0px 2px 8px 1px #ccc;
+    background-color: var(--white1);
+    margin-bottom: 1rem;
+    cursor: pointer;
 }
 .card-id-wrapper{
     display: flex;
@@ -12,9 +14,9 @@
     justify-content: space-between;
 }
 .card-id{
-    color: grey;
-    font-size: .98rem;
-    font-weight: 450;
+    color: var(--textgrey);
+    font-size: .95rem;
+    font-weight: 500;
 }
 .card-profile{
     height: 15px;
@@ -29,22 +31,28 @@
     position: relative;
     color: white;
 }
-.card-profile-initial::after{
-    content: "";
-    height: 6px;
-    width: 6px;
-    background-color: grey;
-    border: 1px solid white;
+.card-profile-initial{
+    text-transform: uppercase;
+}
+.card-profile-initial-available{
+    height: 10px;
+    width: 10px;
+    background-color: var(--grey1);
+    border: 1.5px solid var(--white1);
     position: absolute;
     z-index: 0;
     border-radius: 50%;
     left: 70%;
-    top: 70%;
+    top: 65%;
+}
+.card-profile-initial-available-true{
+    background-color: rgb(139, 223, 12);
 }
 .card-title{
     font-size: 1rem;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--black1);
+
 }
 .card-tag{
     display: flex;
@@ -72,9 +80,9 @@
     width: fit-content;
 }
 .card-tag-title{
-    font-size: .95rem;
-    font-weight: 400;
-    color: grey;
+    font-size: .85rem;
+    font-weight: 500;
+    color: var(--textgrey);
 }
 .card-tag-title::before{
     display: inline-block;
