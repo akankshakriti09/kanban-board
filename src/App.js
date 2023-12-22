@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import axios  from 'axios';
 
 import './App.css';
@@ -10,38 +10,61 @@ function App() {
   const userList = ['Anoop Sharma', 'Yogesh','Suresh', 'Shankar Kumar', 'Ramesh']
   const priorityList = [{name:'No priority', priority: 0}, {name:'Low', priority: 1}, {name:'Medium', priority: 2}, {name:'High', priority: 3}, {name:'Urgent', priority: 4}]
 
+  const [groupValue, setgroupValue] = useState('status')
+  const [orderValue, setorderValue] = useState('title')
+  const [ticketDetails, setticketDetails] = useState([]);
+
+  const orderDataByValue = useCallback(async (cardsArry) => {
+    if (orderValue === 'priority') {
+      cardsArry.sort((a, b) => a.priority - b.priority);
+    } else if (orderValue === 'title') {
+      cardsArry.sort((a, b) => {
+        const titleA = a.title.toLowerCase();
+        const titleB = b.title.toLowerCase();
+
+        if (titleA < titleB) {
+          return -1;
+        } else if (titleA > titleB) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+    }
+    await setticketDetails(cardsArry);
+  }, [orderValue, setticketDetails]);
+
+
   useEffect(() => {
     async function fetchData() {
       const response = await axios.get('https://tfyincvdrafxe7ut2ziwuhe5cm0xvsdu.lambda-url.ap-south-1.on.aws/ticketAndUsers');
-      const ticketArray = refactorData(response);
+      // const ticketArray = refactorData(response);
+      await refactorData(response);
+
+      
       
 
-      console.log(ticketArray);
+      // console.log(ticketArray);
 
     }
     fetchData();
-    
-  }, [])
-
-  const [ticketDetails, setticketDetails] = useState([]);
-  function refactorData(response){
-    let ticketArray = []
-      if(response.status  === 200){
-        for(let i=0; i<response.data.tickets.length; i++){
-          for(let j=0; j<response.data.users.length; j++){
-            if(response.data.tickets[i].userId === response.data.users[j].id){
-              let ticketJson = {...response.data.tickets[i], userObj: response.data.users[j]}
-              ticketArray.push(ticketJson)
+    async function refactorData(response){
+      let ticketArray = []
+        if(response.status  === 200){
+          for(let i=0; i<response.data.tickets.length; i++){
+            for(let j=0; j<response.data.users.length; j++){
+              if(response.data.tickets[i].userId === response.data.users[j].id){
+                let ticketJson = {...response.data.tickets[i], userObj: response.data.users[j]}
+                ticketArray.push(ticketJson)
+              }
             }
           }
         }
-      }
-    setticketDetails(ticketArray);
-    return ticketArray;
-  }
-
-  const [groupValue, setgroupValue] = useState('status')
-  const [orderValue, setorderValue] = useState('priority')
+      await setticketDetails(ticketArray)
+      orderDataByValue(ticketArray)
+    }
+    
+  }, [orderDataByValue])
 
   function handleGroupValue(value){
     setgroupValue(value);
@@ -52,10 +75,11 @@ function App() {
     setorderValue(value);
     console.log(value);
   }
-
+  
   return (
     <>
-      <Navbar  groupValue={groupValue}
+      <Navbar
+        groupValue={groupValue}
         orderValue={orderValue}
         handleGroupValue={handleGroupValue}
         handleOrderValue={handleOrderValue}
@@ -68,7 +92,7 @@ function App() {
                 {
                   statusList.map((listItem) => {
                     return(<List
-                      groupValue='other'
+                      groupValue='status'
                       orderValue={orderValue}
                       listTitle={listItem}
                       listIcon=''
@@ -82,7 +106,7 @@ function App() {
               {
                 userList.map((listItem) => {
                   return(<List
-                    groupValue='other'
+                    groupValue='user'
                     orderValue={orderValue}
                     listTitle={listItem}
                     listIcon=''
