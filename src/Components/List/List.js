@@ -5,11 +5,11 @@ import TodoIcon from "../../static/Images/Todo.svg";
 import InProgressIcon from "../../static/Images/InProgress.svg";
 import DoneIcon from "../../static/Images/Done.svg";
 import CancelledIcon from "../../static/Images/Cancelled.svg";
-import cardIcon1 from "../../static/Images/cardIcon1.svg";
-import cardIcon2 from "../../static/Images/cardIcon2.svg";
-import cardIcon3 from "../../static/Images/cardIcon3.svg";
-import cardIcon4 from "../../static/Images/cardIcon4.svg";
-import cardIcon5 from "../../static/Images/cardIcon5.svg";
+import NoPriority from "../../static/Images/NoPriority.svg";
+import LowPriority from "../../static/Images/LowPriority.svg";
+import MediumPriority from "../../static/Images/MediumPriority.svg";
+import HighPriority from "../../static/Images/HighPriority.svg";
+import UrgentPriority from "../../static/Images/UrgentPriority.svg";
 
 import './List.css'
 import Card from '../Card/Card'
@@ -46,11 +46,11 @@ export default function List(props) {
                             'user': <></>,
                             'priority' : <>{
                                 {
-                                    0: <div className="card-tag-icon"><img src={cardIcon1} alt="cardIcon1" /> </div>,
-                                    1: <div className="card-tag-icon"><img src={cardIcon2} alt="cardIcon2" /> </div>,
-                                    2: <div className="card-tag-icon"><img src={cardIcon3} alt="cardIcon3" /> </div>,
-                                    3: <div className="card-tag-icon"><img src={cardIcon4} alt="cardIcon4" /> </div>,
-                                    4: <div className="card-tag-icon"><img src={cardIcon5} alt="cardIcon5" /> </div>                                    
+                                    0: <div className="card-tag-icon"><img src={NoPriority} alt="NoPriority" /> </div>,
+                                    1: <div className="card-tag-icon"><img src={LowPriority} alt="LowPriority" /> </div>,
+                                    2: <div className="card-tag-icon"><img src={MediumPriority} alt="MediumPriority" /> </div>,
+                                    3: <div className="card-tag-icon"><img src={HighPriority} alt="HighPriority" /> </div>,
+                                    4: <div className="card-tag-icon"><img src={UrgentPriority} alt="UrgentPriority" /> </div>                                    
                                 }[props.listTitle]
                             } </>
                         }[props.groupValue]
