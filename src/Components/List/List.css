@@ -1,6 +1,6 @@
 .list_container{
-    width: 360px;
-    margin-left: 2.5rem;
+    width: 280px;
+    margin-left: 1rem;
 }
 .list-container:last-child{
     margin-right: 2.5rem;

@@ -3,9 +3,9 @@
     padding: 1rem;
     border-radius: .5rem;
     border: 1px solid #ccc;
-    box-shadow: 0px 2px 8px 1px #ccc;
+    box-shadow: 0px 1px 5px 0px #ccc;
     background-color: var(--white1);
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     cursor: pointer;
 }
 .card-id-wrapper{
@@ -15,8 +15,8 @@
 }
 .card-id{
     color: var(--textgrey);
-    font-size: .95rem;
-    font-weight: 500;
+    font-size: .98rem;
+    font-weight: 00;
 }
 .card-profile{
     height: 15px;
@@ -35,8 +35,8 @@
     text-transform: uppercase;
 }
 .card-profile-initial-available{
-    height: 10px;
-    width: 10px;
+    height: 6px;
+    width: 6px;
     background-color: var(--grey1);
     border: 1.5px solid var(--white1);
     position: absolute;
